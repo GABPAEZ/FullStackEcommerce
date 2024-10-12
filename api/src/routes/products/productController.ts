@@ -1,23 +1,82 @@
 import { Request, Response, NextFunction } from "express";
+import { db } from "../../db";
+import { productsTable } from "../../db/productSchema";
+import { eq } from "drizzle-orm";
 
-export function listProducts(req:Request, res:Response) {
-    res.send('The list of products');
+
+//LIST OF PRODUCTS
+export async function listProducts(req: Request, res: Response) {
+
+    try {
+        const products = await db.select().from(productsTable);
+        res.status(200).json(products);
+    }
+    catch (error) {
+        res.status(500).send(error);
+    }
+}
+//FIND A PRODUCT BY ID
+export async function getProductById(req: Request, res: Response) {
+    
+    const { id } = req.params;
+
+    try {
+        const [product] = await db.select().from(productsTable).where(eq(productsTable.id, Number(id)));
+        if (!product) {
+            res.status(404).json({"message":"Product not found"})
+        } else {
+            res.status(200).json(product);
+        }
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+//CREATE A PRODUCT
+export async function createProduct(req: Request, res: Response) {
+
+    try {
+       
+       const [product] = await db.insert(productsTable).values(req.body).returning();
+       res.status(201).json(product);
+    
+   } catch (error) {
+        res.status(500).send(error);
+   }
 }
 
-export function getProductById(req:Request, res:Response){
-    console.log(req.params);
-    res.send('Identificacion de producto');
+//UPDATE A PRODUCT, I can only send that fields that to be change
+export async function updateProduct(req: Request, res: Response) {
+    const { id } = req.params;
+    const updatedFields = req.body;
+
+    try {
+      
+        const [product] = await db.update(productsTable).set(updatedFields).where(eq(productsTable.id, Number(id))).returning();
+        if (!product) {
+            res.status(404).json({"message":"Product not found"})
+        } else {
+            res.status(200).json(product);
+        }
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
-export function createProduct(req: Request, res: Response) {
-    console.log(req.body);
-    res.send('New product created');
-}
+//DELETE A PRODUCT
+export async function deleteProduct(req: Request, res: Response) {
+    const { id } = req.params;
 
-export function updateProduct(req: Request, res: Response) {
-    res.send('update product');
-}
+    try {
+         const [ product] = await db.delete(productsTable).where(eq(productsTable.id, Number(id))).returning();
+        if (!product) {
+            res.status(404).json({"message":"Product not found"})
+        } else {
+            res.status(200).json({"message" : `Product with Id: ${id} was deleted`});
+        }
 
-export function deleteProduct(req: Request, res: Response) {
-    res.send('delete product');
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }

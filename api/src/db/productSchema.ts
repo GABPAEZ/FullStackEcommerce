@@ -6,6 +6,6 @@ export const productsTable = pgTable('products', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     name: varchar({ length: 255 }).notNull(),
     description: text(),
-    iamge: varchar({ length: 255 }),
+    image: varchar({ length: 255 }),
     price: doublePrecision().notNull()
 });

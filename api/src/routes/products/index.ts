@@ -3,10 +3,6 @@ import { createProduct, deleteProduct, getProductById, listProducts, updateProdu
 
 const router = Router();
 
-router.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
 router.get('/', listProducts);
 
 router.get('/:id', getProductById )
