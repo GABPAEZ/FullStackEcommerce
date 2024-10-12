@@ -1,2 +1,3 @@
-*ORM : Drizzle
-*database and deployment : GenezIO
+- ORM : Drizzle
+- database and deployment : GenezIO
+- data validation : Drizzle-ZOD instead of express-validation as middleware
