@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { createProduct, deleteProduct, getProductById, listProducts, updateProduct,  } from './productController';
-import { validateData } from '../../middlewares/validationMiddleware';
+import { createProduct, deleteProduct, getProductById, listProducts, updateProduct,  } from './productController.js';
+import { validateData } from '../../middlewares/validationMiddleware.js';
 
-import { createProductSchema, updateProductSchema } from '../../db/productSchema';
-import { verifySeller, verifyToken } from '../../middlewares/authMiddlewares';
+import { createProductSchema, updateProductSchema } from '../../db/productSchema.js';
+import { verifySeller, verifyToken } from '../../middlewares/authMiddlewares.js';
 
 
 

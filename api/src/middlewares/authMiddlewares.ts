@@ -1,6 +1,6 @@
 //middlewares para permitir que solos los usuarios con token y utenticados puedan crear productos
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload  } from 'jsonwebtoken';
 
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
@@ -14,13 +14,13 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
     try {
 
         //decodo jwt token data
-        const decoded = jwt.verify(token, 'your-secret');
+        const decoded = jwt.verify(token, 'your-secret') as JwtPayload ;
         if (typeof decoded !== 'object' || !decoded?.userId) {
             res.status(401).json({ error: 'Access denied' })
         }
         //console.log(decoded);
-        req.userId = decoded?.userId;
-        req.role = decoded?.role;
+        req.userId = decoded.userId;
+        req.role = decoded.role;
 
         next();
         

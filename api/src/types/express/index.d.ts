@@ -7,7 +7,6 @@ declare global {
             userId?: Number;
             cleanBody?: any;
             role?: string;
-            userId?: string;
         }
     }
 }
