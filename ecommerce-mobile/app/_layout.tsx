@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Stack, Tabs } from 'expo-router'
+import '@/global.css';
+import { Stack, Tabs } from 'expo-router';
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 
 export default function Rootlayout() {
-    return (
-        <Stack />
-        
-  )
+  return (
+    <GluestackUIProvider>
+      <Stack />
+    </GluestackUIProvider>
+  );
 }
