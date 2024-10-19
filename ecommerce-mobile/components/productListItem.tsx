@@ -19,14 +19,14 @@ interface Props {
 
 export default function ProductListItem({ product }: Props) {
   return (
-    <Card className="p-5 rounded-lg max-w-[360px] m-3 flex-1">
+    <Card className="p-5 rounded-lg max-w-[360px] flex-1">
       <Image
         source={{
           uri: product.image,
         }}
         alt={`${product.name} image`}
         className="mb-6 h-[240px] w-full rounded-md"
-        resizeMode='contain'
+        resizeMode="contain"
       />
       <Text className="text-sm font-normal mb-2 text-typography-700">
         {product.name}
